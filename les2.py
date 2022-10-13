@@ -21,13 +21,13 @@ def IsDigit(data):
 def Factorial(digit):
     list = []
     if digit == 0:
-        list.extend([1])
+        list.extend(1)
     else:
         count = 1
         sum = 1
         for count in range(1, digit+1):
             sum = sum*count
-            list.extend([sum])
+            list.extend(sum)
     return list
 
 def Tusk2():
