@@ -51,7 +51,7 @@ def SimplMultipliers(digit):
 # input("Для выполнения следующей задачи нажмите Enter")
 # os.system("cls")
 
-# Задача 3. Выведите число π с заданной точностью. Точность вводится пользователем в виде натурального числа.3 -> 3.142
+# Задача 3. Выведите число π с заданной точностью. Точность вводится пользователем в виде натурального числа. 3 -> 3.142
 # 5 -> 3.14159
 
 # print("Выполняется задача 3")
@@ -65,16 +65,24 @@ def SimplMultipliers(digit):
 # 2. 3x^2 + x + 8
 # Результат: 8x^2 + 4x + 8
 
+def OpenFile(path):  
+    data = open(path, "r", encoding = "utf-8")
+    info = data.readlines()
+    data.close()
+    return info
+
 print("Выполняется задача 4")
 path1 = Path("les4", "mn1.txt")
 path2 = Path("les4", "mn2.txt")
 
-data = open(path1, "r", encoding = "utf-8")
-mn1 = data.readlines()
-data.close()
 
-data = open(path2, "r", encoding = "utf-8")
-mn2 = data.readlines()
-data.close()
 
-print(mn1, mn2)
+mn1 = str(OpenFile(path1)).strip("'[] ")
+mn2 = str(OpenFile(path2)).strip("'[] ")
+
+for i in mn1:
+    print(i)
+
+
+
+
