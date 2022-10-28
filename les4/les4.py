@@ -71,17 +71,67 @@ def OpenFile(path):
     data.close()
     return info
 
+def GetIndexList(list):
+    index = []
+    masc = []
+    for item in list:
+        if item.find("^") != -1:
+            index.append(int(item[0]))
+            masc.append(item[1:])
+        else:
+            if item.find("x") != -1:
+                x = item.find("x")
+                if not item[:x].isdigit():
+                    item = item.replace('x', '1')
+                    index.append(int(item))
+                else:
+                    item = item.strip('x')
+                    index.append(int(item))
+                masc.append('x')
+            else:
+                index.append(int(item))
+    return index, masc
+
+def GetSumIndex(arg1, arg2):
+    finalpol = []
+    if len(arg1) <= len(arg2):
+        for i in range(len(arg1)):
+            finalpol.append(arg1[i]+arg2[i])
+        finalpol.append(arg2[-1])
+    else: 
+        for i in range(len(arg2)):
+            finalpol.append(arg2[i]+arg1[i])
+        finalpol.append(arg1[-1])
+    return finalpol
+
 print("Выполняется задача 4")
 path1 = Path("les4", "mn1.txt")
 path2 = Path("les4", "mn2.txt")
 
+pol1 = str(OpenFile(path1)).strip("'[]").replace(' ', '').replace('-', '+-').split('+')
+pol2 = str(OpenFile(path2)).strip("'[]").replace(' ', '').replace('-', '+-').split('+')
+pol1 = GetIndexList(pol1)
+pol2 = GetIndexList(pol2)
+
+if pol1[1] == pol2[1]:
+    mask = pol1[1]
+    pol1 = pol1[0]
+    pol2 = pol2[0]
+
+sumindex = GetSumIndex(pol1, pol2)
+
+def GetFinalPol(arg, mask):
+    fimalpol = []
+    if len(arg) >= len(mask):
+        count = len(mask)
+    for i in range(count):
+       fimalpol.append(str(arg[i])+mask[i])
+    fimalpol.append(str(arg[i])+mask[i])
+    return fimalpol
+
+print(GetFinalPol(sumindex, mask))
 
 
-mn1 = str(OpenFile(path1)).strip("'[] ")
-mn2 = str(OpenFile(path2)).strip("'[] ")
-
-for i in mn1:
-    print(i)
 
 
 
