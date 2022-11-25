@@ -27,13 +27,13 @@ def BestResult(scores_table):
         count += 1
     return f'Победила {scores_table[int(x)][0]} группа с {len(scores_table[x]) - 1} студентами и общим баллом: {round(max, 3)}'
 
-# groups = ['Первая', 'Вторая', 'Третья', 'Четвертая']
-# groups_table = CreateGroups(groups)
-# print(BestResult(groups_table))
-# print()
+groups = ['Первая', 'Вторая', 'Третья', 'Четвертая']
+groups_table = CreateGroups(groups)
+print(BestResult(groups_table))
+print()
 
-# input("Нажмите что-нибудь для выполнения след. задачи: ")
-# os.system("cls")
+input("Нажмите что-нибудь для выполнения след. задачи: ")
+os.system("cls")
 
 # Задача 2. Дана квадратная матрица, заполненная случайными числами.
 # Определите, сумма элементов каких строк превосходит сумму главной диагонали матрицы.
@@ -69,13 +69,13 @@ def SumMatrix(matrix):
     else:
         return f"{itog} строки превышают сумму диагонали, равную {diag_sum}"
 
-# matrix = CreateMatrix(int(input("Введите размер матрицы: ")))
-# print(SumMatrix(matrix))
+matrix = CreateMatrix(int(input("Введите размер матрицы: ")))
+print(SumMatrix(matrix))
 
-# print()
+print()
 
-# input("Нажмите что-нибудь для выполнения след. задачи: ")
-# os.system("cls")
+input("Нажмите что-нибудь для выполнения след. задачи: ")
+os.system("cls")
 
 # Задача 3. В двумерном массиве хранятся средние дневные температуры с мая по сентябрь за прошлый год.
 # Каждому месяцу соответствует своя строка. Определите самый жаркий и самый холодный 7-дневный промежуток этого периода. Выведите его даты.
@@ -91,74 +91,67 @@ def CreateWether(month):
             month_count = 30
         else: month_count = 31
         wether.append(list(random.randint(-10,32) for _ in range(month_count)))
-        print(wether[i])
+        print(f"{wether[i]} - {month[i]}")
     return wether
 
 # Транформируем все в один список и возвращаем
-def TransforWether(month):
+def TransforWether(wether):
     days = []
-    for items in month:
-        days.append(items)
+    for month in wether:
+        for items in month:
+            days.append(items)
     return days
 
-def FindMothLen():
+# Находим индексы последнего дня каждого месяца
+def FindMothLen(wether):
     count_days = []
     summa = 0
     for month in wether:
         summa += len(month)
-        print(len(month))
         count_days.append(summa - 1)
     return count_days
-
-# Находим индекс максимально высокой температуры в заданном диапазане и возвращаем
-def FindMaxIndex(days, interval):
-    max = 0
+    
+# Находим индексы максимально высокой и максимально низкой температуры и возвращаем
+def FindMinMaxIndex(days, interval):
+    min = max = sum(days[0:interval])
+    min_index = 0
     max_index = 0
-    for i in range(len(days) - interval):
+    for i in range(len(days) - interval + 1):
         if max < sum(days[i:i+interval]):
             max = sum(days[i:i+interval])
             max_index = i
-    print(max_index)
-    return max_index
+        if min > sum(days[i:i+interval]):
+            min = sum(days[i:i+interval])
+            min_index = i
+    return [max_index, min_index]
+
+def ShowIntervals(month, days, count_days, interval, index_temp):
+    date_max = date2_max = date_min = date2_min = month[0]
+    first_day_max = index_temp[0] + 1
+    last_day_max = index_temp[0] + interval - 1
+    first_day_min = index_temp[1] + 1
+    last_day_min = index_temp[1] + interval - 1
+
+    for x in range(len(count_days)):
+        if index_temp[0] > count_days[x]:
+            first_day_max = index_temp[0] - count_days[x]
+            date_max = month[x + 1]
+        if (index_temp[0] + interval) > count_days[x]:
+            last_day_max = (index_temp[0] + interval - 1) - count_days[x]
+            date2_max = month[x + 1]
+        if index_temp[1] > count_days[x]:
+            first_day_min = index_temp[1] - count_days[x]
+            date_min = month[x + 1]
+        if (index_temp[1] + interval) > count_days[x]:
+            last_day_min = (index_temp[1] + interval - 1) - count_days[x]
+            date2_min = month[x + 1]
+    print(f"Самый жаркий период ({interval} дня): {first_day_max} {date_max} - {last_day_max} {date2_max} с температурой {days[index_temp[0]:index_temp[0] + interval]}")
+    print(f"Самый холодный период ({interval} дня): {first_day_min} {date_min} - {last_day_min} {date2_min} с температурой {days[index_temp[1]:index_temp[1] + interval]}")
 
 month = ['Май', 'Июнь', 'Июль', 'Август', 'Сентябрь']
 wether = CreateWether(month)
-interval = 7
-
-count_days = {}
-    
-
-
-# count = []
-# long_wet = []
-# summa = 0
-# for mons in wether:
-#     print(len(mons))
-#     summa += len(mons)
-#     count.append(summa - 1)
-#     # for x in mons:
-#     #     long_wet.append(x)
-# # print(count, len(long_wet)) 
-
-# 
-# max = 0
-# max_index = 0
-# for i in range(len(long_wet) - interval):
-#     if max < sum(long_wet[i:i+interval]):
-#         max = sum(long_wet[i:i+interval])
-#         max_index = i
-# print(max_index)
-
-# m = max_index
-# f = max_index + interval - 1 
-# data = data2 = month[0]
-
-# for x in range(len(count)):
-#     if (max_index) > count[x]:
-#         m = max_index - count[x]
-#         data = month[x + 1]
-#     if (max_index + interval) > count[x]:
-#         data2 = month[x + 1]
-#         f = (max_index + interval - 1) - count[x]
-
-# print(f"Самый жаркий период: {m} {data} - {f} {data2} с температурой {long_wet[max_index:max_index+interval]}")
+days = TransforWether(wether)
+count_days = FindMothLen(wether)
+interval = int(input("Введите интервал: "))
+index_temp = FindMinMaxIndex(days, interval)
+ShowIntervals(month, days, count_days, interval, index_temp)
