@@ -1,6 +1,6 @@
 import telebot
 
-bot = telebot.TeleBot("5951329094:AAG8xLgaX_6Zc6QyJGQh3lKuVeNLZsvN3mM", parse_mode=None)
+bot = telebot.TeleBot("", parse_mode=None)
 
 # Задача 1. Добавьте telegram-боту возможность вычислять выражения:1 + 4 * 2 -> 9
 
