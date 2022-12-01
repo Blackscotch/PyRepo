@@ -1,4 +1,3 @@
-enter = input("Введите выражение: ")
 def GetList(some_text):
     list = []
     tmp = ""
@@ -17,24 +16,50 @@ def GetList(some_text):
                     list.append(some_text[i])
     return list
 
-new_list = GetList(enter)      
-print(new_list)
-print(len(new_list))
-count = len(new_list)//2
-print("число итераций " +str(count))
-while count != 0:
-    res = 0
-    for i in range(len(new_list)):
-        if new_list[i] == "*":
-            res = int(new_list[i - 1]) * int(new_list[i + 1])
-            del new_list[i - 1:i + 1]
-            new_list.append(res)
+def GetResult(new_list):
+    count = len(new_list)//2
+    while count != 0:
+        res = 0
+        if str(new_list).find("*") != -1 or str(new_list).find("/") != -1:
+            index = index2 = 0
+            if str(new_list).find("*") != -1:
+                index = new_list.index("*")
+            if str(new_list).find("/") != -1:
+                index2 = new_list.index("/")
+            if index != 0 and index2 != 0:
+                if index < index2:
+                    res = float(new_list[index - 1]) * float(new_list[index + 1])
+                else:
+                    index = index2
+                    res = float(new_list[index - 1]) / float(new_list[index + 1])
+            elif index == 0:
+                index = index2
+                res = float(new_list[index - 1]) / float(new_list[index + 1])
+            else:
+                res = float(new_list[index - 1]) * float(new_list[index + 1])
+            del new_list[index - 1:index + 2]
+            new_list.insert(index-1, res)
             res = 0
             count = count - 1
-        if new_list[i] == "+":
-            res = int(new_list[i - 1]) + int(new_list[i + 1])
-            del new_list[i - 1:i + 1]
-            new_list.append(res)
+        elif str(new_list).find("+") != -1 or str(new_list).find("-") != -1:
+            index = index2 = 0
+            if str(new_list).find("+") != -1:
+                index = new_list.index("+")
+            if str(new_list).find("-") != -1:
+                index2 = new_list.index("-")
+            if index != 0 and index2 != 0:
+                if index < index2:
+                    res = float(new_list[index - 1]) + float(new_list[index + 1])
+                else:
+                    index = index2
+                    res = float(new_list[index - 1]) - float(new_list[index + 1])
+            elif index == 0:
+                index = index2
+                res = float(new_list[index - 1]) - float(new_list[index + 1])
+            else:
+                res = float(new_list[index - 1]) + float(new_list[index + 1])
+            del new_list[index - 1:index + 2]
+            new_list.insert(index-1, res)
             res = 0
             count = count - 1
-print(new_list)
+    return new_list
