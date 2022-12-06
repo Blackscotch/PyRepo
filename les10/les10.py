@@ -32,18 +32,16 @@ def qust_text(message):
         bot.register_next_step_handler(message, write_text)
 def write_text(message):
     if message.text != "":
-        # print(message)
         mess = message.text
         mess_id = message.message_id
         id = message.from_user.id
         name = message.from_user.first_name
         l_name = message.from_user.last_name
         date = datetime.datetime.now()
-        answer = '_'
         bot.reply_to(message, f"Ваше сообщение было записано и отправлено в тех. поддержку.\n"
             f"Дата обращения: {date.hour}:{date.minute} {date.day}-{date.month}-{date.year}"
         )
-        WriteFile(mess_id, mess, id, name, l_name, date, answer)
+        WriteFile(mess_id, mess, id, name, l_name, date)
 
 
 bot.infinity_polling()
